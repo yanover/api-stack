@@ -1,4 +1,4 @@
-class Pile:
+class Stack:
     def __init__(self):
         self.values = []
 
@@ -7,7 +7,10 @@ class Pile:
         return self.get()
 
     def get(self):
-        return self.values[len(self.values) - 1]
+        if(len(self.values)):
+            return self.values[len(self.values) - 1]
+        else:
+            return None
 
     def remove(self):
         del self.values[len(self.values) - 1]
