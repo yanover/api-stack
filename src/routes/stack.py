@@ -11,7 +11,7 @@ ENDPOINT = '/stack'
 stack = Stack()
 
 @stack_endpoint.route(ENDPOINT, methods = ['GET', 'POST', 'DELETE'])
-def stack() :
+def default() :
     # Return last item
     if request.method == 'GET':
         return str(stack.get())
@@ -19,14 +19,14 @@ def stack() :
     if request.method == 'POST':
         item = request.get_json(force=True)['item']
         if(isinstance(item, int)):
-            return str(stack.push(item))
+            stack.push(item)
         else:
             abort(404)
     # Delete item
     elif request.method == 'DELETE':
         stack.remove()
     # Default return value    
-    return ""
+    return str(stack.__str__())
 
 @stack_endpoint.route(f"{ENDPOINT}/max", methods = ['GET'])
 def max() :
