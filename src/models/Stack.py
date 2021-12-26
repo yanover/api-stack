@@ -20,32 +20,16 @@ class Stack:
         del self.values[len(self.values) - 1]
 
     def sort(self, toSort):
-
-        # [2, 3, 4, 1]
         for i, e in reversed(list(enumerate(toSort))):
-            print(i, e)
-            if(toSort[i] <= toSort[i-1]):
-                toSort[i],toSort[i-1]=toSort[i-1],toSort[i]
-
+            if(toSort[i] < toSort[i-1] and i > 0):
+                toSort[i], toSort[i-1] = toSort[i-1], toSort[i]
         return toSort
-
-        return ""
 
     def max(self):
         return self.sorted[len(self.values) - 1]
-        """ cursor = self.values[0]
-        for i in self.values:
-            if(i > cursor):
-                cursor = i
-        return cursor """
 
     def min(self):
         return self.sorted[0]
-        """ cursor = self.values[0]
-        for i in self.values:
-            if(i < cursor):
-                cursor = i
-        return cursor """
 
     def __str__(self):
         print("===== VALUES =====")

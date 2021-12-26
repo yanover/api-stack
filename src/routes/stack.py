@@ -34,5 +34,5 @@ def max() :
 
 @stack_endpoint.route(f"{ENDPOINT}/min", methods = ['GET'])
 def min() :
-    return str(stack.max())
+    return str(stack.min())
 
