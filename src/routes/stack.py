@@ -1,6 +1,7 @@
 from flask import Blueprint, request, abort
 from models.Stack import Stack
 from common.errors.IsFullException import IsFullException
+from flask import current_app
 
 # Declare Blueprint
 stack_endpoint = Blueprint("stack_endpoint", __name__)
@@ -16,16 +17,24 @@ stack = Stack()
 def default():
     try:
         if request.method == 'GET':
+            current_app.logger.debug('PEEK request on current stack')
             return str(stack.peek())
         if request.method == 'POST':
+            current_app.logger.debug('PUSH request on current stack')
             item = request.get_json(force=True)['item']
             stack.push(item)
         elif request.method == 'DELETE':
+            current_app.logger.debug('POP request on current stack')
             stack.pop()
         # Default return value
         return str(stack.__str__())
-    except (TypeError, IsFull) as e:
+    except (TypeError, IsFullException) as e:
+        current_app.logger.debug(e)
         abort(404, description=e)
+    except Exception as e:
+        current_app.logger.debug(e)
+        abort(500, description=e)
+
 
 @stack_endpoint.route(f"{ENDPOINT}/max", methods=['GET'])
 def max():
